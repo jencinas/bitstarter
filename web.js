@@ -1,16 +1,17 @@
 var fs = require('fs');
 var express = require('express');
+var htmlfile = "index.html";
 
 var app = express.createServer(express.logger());
 
-app.get('/', function(request, response) {
-  var buffer = fs.readFileSync('index.html');
-  var text = buffer.toString('utf-8');
+app.use(express.static(./ + 'public'));
 
-  response.send(text);
+app.get('/', function(request, response) {
+  var html = fs.readFileSync(htmlfile).toString();
+  response.send(html);
 });
 
-var port = process.env.PORT || 5000;
+var port = process.env.PORT || 8080;
 app.listen(port, function() {
   console.log("Listening on " + port);
 });
